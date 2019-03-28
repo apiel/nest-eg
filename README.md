@@ -4,7 +4,6 @@
     id
     title
     __typename
-    type
   }
 }
 ```

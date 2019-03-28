@@ -17,3 +17,7 @@ export class Recipe {
   @Field(type => [String])
   ingredients: string[];
 }
+
+@ObjectType()
+export class RecipeA extends Recipe {
+}

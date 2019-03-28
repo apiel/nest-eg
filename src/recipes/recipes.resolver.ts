@@ -3,7 +3,7 @@ import { Args, Mutation, Query, Resolver, Subscription, ResolveProperty } from '
 import { PubSub } from 'apollo-server-express';
 import { NewRecipeInput } from './dto/new-recipe.input';
 import { RecipesArgs } from './dto/recipes.args';
-import { Recipe } from './models/recipe';
+import { Recipe, RecipeA } from './models/recipe';
 import { RecipesService } from './recipes.service';
 
 const pubSub = new PubSub();
@@ -29,10 +29,13 @@ export class RecipesResolver {
   @Mutation(returns => Recipe)
   async addRecipe(
     @Args('newRecipeData') newRecipeData: NewRecipeInput,
-  ): Promise<Recipe> {
+  ): Promise<RecipeA> {
     const recipe = await this.recipesService.create(newRecipeData);
     pubSub.publish('recipeAdded', { recipeAdded: recipe });
-    return recipe;
+
+    const recipeA = new RecipeA();
+    Object.assign(recipeA, recipe);
+    return recipeA;
   }
 
   @Mutation(returns => Boolean)
@@ -45,14 +48,8 @@ export class RecipesResolver {
     return pubSub.asyncIterator('recipeAdded');
   }
 
-  // @ResolveProperty('__typename')
   @ResolveProperty('__resolveType')
   resolveType(recipe: Recipe): string {
-      return 'abc';
-  }
-
-  @ResolveProperty()
-  type(recipe: Recipe): string {
-      return 'abc';
+      return 'RecipeA';
   }
 }

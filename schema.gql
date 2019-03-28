@@ -29,7 +29,15 @@ type Recipe {
   creationDate: Date!
   ingredients: [String!]!
   resolveType: String!
-  type: String!
+}
+
+type RecipeA {
+  id: ID!
+  title: String!
+  description: String
+  creationDate: Date!
+  ingredients: [String!]!
+  resolveType: String!
 }
 
 type Subscription {
