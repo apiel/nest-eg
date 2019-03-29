@@ -10,16 +10,15 @@ type Query {
   recipes(skip: Int = 0, take: Int = 25): [Recipe!]!
 }
 
-type Recipe {
+interface Recipe {
   id: ID!
   title: String!
   description: String
   creationDate: Date!
   ingredients: [String!]!
-  resolveType: String!
 }
 
-type RecipeA {
+type RecipeA implements Recipe {
   id: ID!
   title: String!
   description: String

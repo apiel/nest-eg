@@ -1,7 +1,7 @@
-import { Field, ID, ObjectType } from 'type-graphql';
+import { Field, ID, ObjectType, InterfaceType } from 'type-graphql';
 
-@ObjectType()
-export class Recipe {
+@InterfaceType()
+export abstract class Recipe {
   @Field(type => ID)
   id: string;
 
@@ -18,6 +18,11 @@ export class Recipe {
   ingredients: string[];
 }
 
-@ObjectType()
-export class RecipeA extends Recipe {
+@ObjectType({ implements: Recipe })
+export class RecipeA implements Recipe {
+  id: string;
+  title: string;
+  description: string;
+  creationDate: Date;
+  ingredients: string[];
 }
